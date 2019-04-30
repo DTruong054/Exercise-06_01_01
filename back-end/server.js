@@ -41,6 +41,10 @@ app.post('/api/message', (req, res) => {
     res.status(200);
 });
 
+app.post('/auth/register', (req, res) => {
+    console.log(req.body);
+}
+
 //Starting to build Crud objects
 function GetMessages(req, res) {
     //Grabbing all data from database

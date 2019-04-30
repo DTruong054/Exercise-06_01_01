@@ -4,13 +4,16 @@ import { config } from './index.config';
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
+//Bringing in AuthController from a file
 import { AuthController } from './auth/auth.controller';
+import { CompareToDirective } from './directives/compareTo.directive';
 import { GithubContributorService } from '../app/components/githubContributor/githubContributor.service';
 import { WebDevTecService } from '../app/components/webDevTec/webDevTec.service';
 import { NavbarDirective } from '../app/components/navbar/navbar.directive';
 import { MalarkeyDirective } from '../app/components/malarkey/malarkey.directive';
 
-angular.module('myMessageFront', ['ui.router', 'ui.bootstrap', 'toastr'])
+angular.module('myMessageFront', ['ui.router', 'ui.bootstrap', 'toastr', 'satellizer'])
+  .constant('API_URL', 'http://localhost:8080') //This is a constant, incase we change anything
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
@@ -21,4 +24,5 @@ angular.module('myMessageFront', ['ui.router', 'ui.bootstrap', 'toastr'])
   .controller('MainController', MainController)
   .controller('AuthController', AuthController)
   .directive('acmeNavbar', NavbarDirective)
-  .directive('acmeMalarkey', MalarkeyDirective);
+  .directive('acmeMalarkey', MalarkeyDirective)
+  .directive('compareTo', CompareToDirective);
