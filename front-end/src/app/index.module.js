@@ -13,7 +13,7 @@ import { NavbarDirective } from '../app/components/navbar/navbar.directive';
 import { MalarkeyDirective } from '../app/components/malarkey/malarkey.directive';
 
 angular.module('myMessageFront', ['ui.router', 'ui.bootstrap', 'toastr', 'satellizer'])
-  .constant('API_URL', 'http://localhost:8080') //This is a constant, incase we change anything
+  .constant('API_URL', 'http://localhost:8080/') //This is a constant, incase we change anything
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)

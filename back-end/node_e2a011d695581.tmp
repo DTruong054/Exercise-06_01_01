@@ -8,10 +8,9 @@ var mongoose = require('mongoose');
 var DBName = "test";
 var url = "mongodb://localhost:27017/" + DBName;
 
-//Calling a method of mongoose to instantiate an object
-var Message = mongoose.model('Message', {
-    msg: String
-});
+//Calling in models from another folder
+var Message = require('./Models/message');
+var auth = require('./controllers/auth');
 
 
 //mounting as middleware
@@ -21,7 +20,7 @@ app.use(bodyParser.json())
 //building more middleware to fix cross origin error
 app.use((req, res, next) => {
     //CorS error is a http violation error.
-    //We aare responding to our browsers with permissions.
+    //We are responding to our browsers with permissions.
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     //Tells it to go on and finish
@@ -40,6 +39,8 @@ app.post('/api/message', (req, res) => {
     //Must formulate a response or infinite loop
     res.status(200);
 });
+
+app.post('/auth/register', auth.register);
 
 //Starting to build Crud objects
 function GetMessages(req, res) {
@@ -63,7 +64,7 @@ mongoose.connect(url, (err, databaseEngine) => {
 
     //Returning a JSON array of raw data
     // GetMessages();
-})
+});
 
 //Can bring in the server in one line instead of a whole file
 var server = app.listen(port, () => {

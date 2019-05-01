@@ -6,6 +6,7 @@ export class AuthController {
     }
 
     register(){
-        this.$auth.signip({email: 'test@test.com'});
+        //This will record our email and password for the sign in
+        this.$auth.signup(this.user);
     }
 }
