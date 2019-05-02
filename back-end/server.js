@@ -9,8 +9,8 @@ var DBName = "test";
 var url = "mongodb://localhost:27017/" + DBName;
 
 //Calling in models from another folder
-var Message = require('./Models/message');
 var auth = require('./controllers/auth');
+var message = require('./controllers/message');
 
 
 //mounting as middleware
@@ -28,28 +28,14 @@ app.use((req, res, next) => {
 });
 
 
-app.get('/api/message', GetMessages);
+app.get('/api/message', message.get);
 
 //creating an Endpoint
-app.post('/api/message', (req, res) => {
-    console.log(req.body);
-    var message = new Message(req.body);
-    message.save();
-
-    //Must formulate a response or infinite loop
-    res.status(200);
-});
+app.post('/api/message', message.post);
 
 app.post('/auth/register', auth.register);
 
-//Starting to build Crud objects
-function GetMessages(req, res) {
-    //Grabbing all data from database
-    //Chained into an exec (Execute) call
-    Message.find({}).exec((err, result) =>{
-        res.send(result);
-    });
-}
+
 
 //Creates a connection to a MongoDB instance and returns the reference to the database. However, in most cases, use the Mongo() object and its getDB() method instead.
 mongoose.connect(url, (err, databaseEngine) => {
