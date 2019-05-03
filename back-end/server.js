@@ -11,6 +11,9 @@ var url = "mongodb://localhost:27017/" + DBName;
 //Calling in models from another folder
 var auth = require('./controllers/auth');
 var message = require('./controllers/message');
+//todo fix the checkauth, there is an error exporting it
+var checkAuth = require('./services/checkauth');
+var cors = require('./services/cors');
 
 
 //mounting as middleware
@@ -18,20 +21,14 @@ app.use(bodyParser.json())
 
 
 //building more middleware to fix cross origin error
-app.use((req, res, next) => {
-    //CorS error is a http violation error.
-    //We are responding to our browsers with permissions.
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    //Tells it to go on and finish
-    next();
-});
+app.use(cors);
 
 
 app.get('/api/message', message.get);
 
 //creating an Endpoint
-app.post('/api/message', message.post);
+//Just mounted the checkAuth middleware, and this will activate before the code after
+app.post('/api/message', checkAuth, message.post);
 
 app.post('/auth/register', auth.register);
 
