@@ -11,7 +11,6 @@ var url = "mongodb://localhost:27017/" + DBName;
 //Calling in models from another folder
 var auth = require('./controllers/auth');
 var message = require('./controllers/message');
-//todo fix the checkauth, there is an error exporting it
 var checkAuth = require('./services/checkauth');
 var cors = require('./services/cors');
 
@@ -31,6 +30,8 @@ app.get('/api/message', message.get);
 app.post('/api/message', checkAuth, message.post);
 
 app.post('/auth/register', auth.register);
+
+app.post('/auth/login', auth.login);
 
 
 

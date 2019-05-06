@@ -14,4 +14,11 @@ export class AuthController {
             vm.$auth.setToken(token)
         });
     }
+    login(){
+        var vm = this;
+        this.$auth.login(this.login.user)
+        .then(function(token) { //.this will lose its scope once you enter this
+            vm.$auth.setToken(token)
+        })
+    }
 }

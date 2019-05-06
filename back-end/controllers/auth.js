@@ -25,6 +25,20 @@ module.exports = {
             }
         });
     })
+    },
+    login: (req, res) => {
+        User.findOne({email: req.body.email }, (err ,user) => {
+            if (!user) {
+                //Not finding a ussr is not an error
+                return res.status(401).send({message: "Email or password is incorrect"})
+            }
+            if (req.body.pwd == user.pwd) {
+                console.log(req.body, user.pwd);
+                res.status(200).send({token: createToken(user)})
+            } else {
+                return res.status(401).send({message: "The email you have entered is incorrect, or could it be your password???"})
+            }
+        })
     }
 }
 
